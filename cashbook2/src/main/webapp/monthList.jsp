@@ -6,7 +6,7 @@
 <%
 	String ID = (String)(session.getAttribute("ID"));
 	if(ID == null){ // 로그아웃 상태 일때
-		response.sendRedirect("/cashbook/index.jsp");
+		response.sendRedirect("/cashbook2/index.jsp");
 		return;
 	}
 	
