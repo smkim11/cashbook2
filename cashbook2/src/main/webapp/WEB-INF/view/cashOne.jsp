@@ -4,22 +4,11 @@
 <%@ page import="dto.*"%>
 <%@ page import="java.text.NumberFormat"%>
 <%
-	String ID = (String)(session.getAttribute("ID"));
-	if(ID == null){ // 로그아웃 상태 일때
-		response.sendRedirect("/cashbook2/index.jsp");
-		return;
-	}
-
-	int cashNo = Integer.valueOf(request.getParameter("cashNo"));
-	String kind = request.getParameter("kind");
-	
-	NumberFormat numberFormat = NumberFormat.getInstance();
-	
-	CashDao cd = new CashDao();
-	ArrayList<HashMap<String,Object>> list = cd.selectCashByNo(cashNo);
-	
-	ReceitDao rd = new ReceitDao();
-	Receit r = rd.selectReceit(cashNo);
+	int cashNo = (Integer)(request.getAttribute("cashNo"));
+	String kind = (String)(request.getAttribute("kind"));
+	NumberFormat numberFormat = (NumberFormat)(request.getAttribute("numberFormat"));
+	ArrayList<HashMap<String,Object>> list = (ArrayList<HashMap<String,Object>>)(request.getAttribute("list"));
+	Receit r = (Receit)(request.getAttribute("r"));
 %>
 <!DOCTYPE html>
 <html>

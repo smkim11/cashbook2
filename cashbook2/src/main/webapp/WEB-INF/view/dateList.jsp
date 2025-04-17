@@ -4,18 +4,9 @@
 <%@ page import="dto.*"%>
 <%@ page import="java.text.NumberFormat"%>
 <%
-	String ID = (String)(session.getAttribute("ID"));
-	if(ID == null){ // 로그아웃 상태 일때
-		response.sendRedirect("/cashbook2/index.jsp");
-		return;
-	}
-	
-	String cashDate = request.getParameter("cashDate");
-	
-	NumberFormat numberFormat = NumberFormat.getInstance();
-	
-	CashDao cd = new CashDao();
-	ArrayList<HashMap<String,Object>> list = cd.selectCashByDate(cashDate);
+	String cashDate = (String)(request.getAttribute("cashDate"));
+	NumberFormat numberFormat = (NumberFormat)(request.getAttribute("numberFormat"));
+	ArrayList<HashMap<String,Object>> list = (ArrayList<HashMap<String,Object>>)(request.getAttribute("list"));
 %>
 <!DOCTYPE html>
 <html>
@@ -83,7 +74,7 @@
 <div class="page-content">
 	<h1><%=cashDate %> 수입 지출</h1>
 	<div class="table-wrapper">
-		<form method="post" action="/cashbook2/cash/insertCashForm.jsp" >
+		<form method="post" action="<%=request.getContextPath() %>/insertCash" >
 			<input type="hidden" name="cashDate" value="<%=cashDate%>">
 			<button type="submit" class="btn btn-primary">추가</button>
 		</form>
@@ -104,7 +95,7 @@
 						<td style='color:<%=m.get("color")%>'><%=m.get("title") %></td>
 						<td style='color:<%=m.get("color")%>'><%=numberFormat.format(m.get("amount"))%></td>
 						<td style='color:<%=m.get("color")%>'>
-							<a href="/cashbook2/cash/cashOne.jsp?cashNo=<%=m.get("cashNo")%>&kind=<%=m.get("kind") %>"><%=m.get("memo") %></a>
+							<a href="<%=request.getContextPath() %>/cashOne?cashNo=<%=m.get("cashNo")%>&kind=<%=m.get("kind") %>"><%=m.get("memo") %></a>
 						</td>
 						<td>
 							<%
