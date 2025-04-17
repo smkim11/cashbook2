@@ -56,11 +56,11 @@
 	<table class="w-50 table table-hover">
 		<tr>
 			<th>1.</th>
-			<td><a href="/cashbook2/category/categoryList.jsp">수입 지출 리스트</a></td>
+			<td><a href="<%=request.getContextPath() %>/categoryList">수입 지출 리스트</a></td>
 		</tr>
 		<tr>
 			<th>2.</th>
-			<td><a href="/cashbook2/monthList.jsp">달력형 리스트</a></td>
+			<td><a href="<%=request.getContextPath() %>/monthList">달력형 리스트</a></td>
 		</tr>
 	</table>
 </body>

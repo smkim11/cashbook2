@@ -4,46 +4,17 @@
 <%@ page import="dto.*"%>
 <%@ page import="java.text.NumberFormat"%>
 <%
-	String ID = (String)(session.getAttribute("ID"));
-	if(ID == null){ // 로그아웃 상태 일때
-		response.sendRedirect("/cashbook2/index.jsp");
-		return;
-	}
-	
-	Calendar c = Calendar.getInstance();
-	
-	if(request.getParameter("targetMonth") != null){
-		c.set(Calendar.MONTH,Integer.valueOf(request.getParameter("targetMonth")));
-	}
-	
-	c.set(Calendar.DATE,1); // 날짜를 1일로 변경
-	
-	int lastDate = c.getActualMaximum(Calendar.DATE);
-	int dayOfWeek = c.get(Calendar.DAY_OF_WEEK); // 요일별 숫자 변환-> 일=1,월=2...
-	
-	int startBlank = dayOfWeek-1;
-	int endBlank = 0;
-	int totalCell = startBlank+lastDate+endBlank;
-	
-	// 전체 칸 개수가 7로 나누어지지 않으면 나누어지도록 endBlank 추가
-	if(totalCell % 7 != 0){
-		endBlank = 7 - totalCell % 7;
-		totalCell = startBlank+lastDate+endBlank;
-	}
-	
-	CashDao cd = new CashDao();
-	
-	ArrayList<HashMap<String,Object>> list = cd.totalAmountByDate(Integer.valueOf(c.get(Calendar.YEAR)),Integer.valueOf(c.get(Calendar.MONTH)+1));
-	
-	int year = c.get(Calendar.YEAR);
-	int month = c.get(Calendar.MONTH)+1;
-	DataDao dd = new DataDao();
-	ArrayList<HashMap<String,Object>> totalList = dd.selectTotalData();
-	ArrayList<HashMap<String,Object>> totalYearList = dd.selectYearData(year);
-	ArrayList<HashMap<String,Object>> totalMonthList = dd.selectMonthData(year,month);
-	
-	NumberFormat numberFormat = NumberFormat.getInstance();
+	Calendar c = (Calendar)(request.getAttribute("c"));
+	int startBlank = (Integer)(request.getAttribute("startBlank"));
+	int lastDate = (Integer)(request.getAttribute("lastDate"));
+	int totalCell = (Integer)(request.getAttribute("totalCell"));
+	ArrayList<HashMap<String,Object>> list = (ArrayList<HashMap<String,Object>>)(request.getAttribute("list"));
+	ArrayList<HashMap<String,Object>> totalList = (ArrayList<HashMap<String,Object>>)(request.getAttribute("totalList"));
+	ArrayList<HashMap<String,Object>> totalYearList = (ArrayList<HashMap<String,Object>>)(request.getAttribute("totalYearList"));
+	ArrayList<HashMap<String,Object>> totalMonthList = (ArrayList<HashMap<String,Object>>)(request.getAttribute("totalMonthList"));
+	NumberFormat numberFormat = (NumberFormat)(request.getAttribute("numberFormat"));
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,9 +124,9 @@
 <div class="container">
 	<div class="calendar">
 	<div class="calendar-header">
-		<a class="nav-button" href="/cashbook2/monthList.jsp?targetMonth=<%=c.get(Calendar.MONTH)-1%>">◀</a>
+		<a class="nav-button" href="<%=request.getContextPath() %>/monthList?targetMonth=<%=c.get(Calendar.MONTH)-1%>">◀</a>
 		<h1><%=c.get(Calendar.YEAR) %>년 <%=c.get(Calendar.MONTH)+1 %>월</h1>
-		<a class="nav-button" href="/cashbook2/monthList.jsp?targetMonth=<%=c.get(Calendar.MONTH)+1%>">▶</a>
+		<a class="nav-button" href="<%=request.getContextPath() %>/monthList?targetMonth=<%=c.get(Calendar.MONTH)+1%>">▶</a>
 	</div>
 	<table class="table">
 		<tr>
@@ -180,7 +151,7 @@
 							String mon = String.format("%02d", c.get(Calendar.MONTH) + 1);
 							String date = String.format("%02d", i-startBlank);
 					%>
-							<a href="/cashbook2/dateList.jsp?cashDate=<%=c.get(Calendar.YEAR)%>-<%=mon%>-<%=date %>"><%=i-startBlank %></a><br>
+							<a href="<%=request.getContextPath() %>/dateList?cashDate=<%=c.get(Calendar.YEAR)%>-<%=mon%>-<%=date %>"><%=i-startBlank %></a><br>
 							<%
 								String expense = "-";
 								String income = "-";
