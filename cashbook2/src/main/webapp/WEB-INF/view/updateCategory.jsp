@@ -3,16 +3,8 @@
 <%@ page import="dto.*"%>
 <%@ page import="java.util.*"%>
 <%
-	String ID = (String)(session.getAttribute("ID"));
-	if(ID == null){ // 로그아웃 상태 일때
-		response.sendRedirect("/cashbook2/index.jsp");
-		return;
-	}
-	
-	int cnum = Integer.valueOf(request.getParameter("cnum"));
-	
-	CategoryDao cd = new CategoryDao();
-	Category c = cd.selectCategoryOne(cnum);
+	int cnum = (Integer)(request.getAttribute("cnum"));
+	Category c = (Category)(request.getAttribute("c"));
 %>
 <!DOCTYPE html>
 <html>
@@ -60,7 +52,7 @@
 <jsp:include page="/nav/nav.jsp" />
 	<div class="page-content">
 		<h1>제목 수정</h1>
-		<form action="/cashbook2/category/updateCategoryTitleAction.jsp" method="post">
+		<form action="<%=request.getContextPath() %>/updateCategory" method="post">
 			<table class="w-25 table table-bordered text-center align-middle">
 				<tr>
 					<th>번호</th>

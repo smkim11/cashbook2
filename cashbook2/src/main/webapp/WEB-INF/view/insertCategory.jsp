@@ -1,11 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	String ID = (String)(session.getAttribute("ID"));
-	if(ID == null){ // 로그아웃 상태 일때
-		response.sendRedirect("/cashbook2/index.jsp");
-		return;
-	}	
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +45,7 @@
 <jsp:include page="/nav/nav.jsp" />
 	<div class="page-content">
 		<h1>수입 지출 리스트 추가</h1>
-		<form method="post" action="/cashbook2/category/insertCategoryAction.jsp">
+		<form method="post" action="<%=request.getContextPath()%>/insertCategory">
 		<table class="w-25 table table-bordered text-center align-middle">
 			<tr>
 				<th>종류</th>

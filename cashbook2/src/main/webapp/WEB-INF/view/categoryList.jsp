@@ -3,25 +3,9 @@
 <%@ page import="dto.*"%>
 <%@ page import="java.util.*"%>
 <%
-	String ID = (String)(session.getAttribute("ID"));
-	if(ID == null){ // 로그아웃 상태 일때
-		response.sendRedirect("/cashbook2/index.jsp");
-		return;
-	}
-	
-	int currentPage = 1;
-	if(request.getParameter("currentPage") != null){
-		currentPage = Integer.valueOf(request.getParameter("currentPage"));
-	}
-	int rowPerPage = 5;
-	Paging p = new Paging();
-	p.setCurrentPage(currentPage);
-	p.setRowPerPage(rowPerPage);
-	
-	CategoryDao cd = new CategoryDao();
-	ArrayList<Category> list = cd.selectCategory(p);
-	
-	int lastPage = p.getLastPage(cd.totalCategory());
+	int currentPage = (Integer)(request.getAttribute("currentPage"));
+	int lastPage = (Integer)(request.getAttribute("lastPage"));
+	ArrayList<Category> list = (ArrayList<Category>)(request.getAttribute("list"));
 %>
 <!DOCTYPE html>
 <html>
@@ -76,7 +60,7 @@
 <div class="container">
 	<h1>수입 지출 리스트</h1>
 	<div class="mb-3 text-end">
-		<a href="/cashbook2/category/insertCategoryForm.jsp">추가</a>
+		<a href="<%=request.getContextPath() %>/insertCategory">추가</a>
 	</div>
 	<table class="table table-bordered text-center align-middle">
 		<thead class="table-light">
@@ -97,8 +81,8 @@
 						<td><%=c.getKind() %></td>
 						<td><%=c.getTitle() %></td>
 						<td><%=c.getCreatedate() %></td>
-						<td><a href="/cashbook2/category/updateCategoryTitleForm.jsp?cnum=<%=c.getCategoryNo() %>">수정</a></td>
-						<td><a href="/cashbook2/category/deleteCategory.jsp?cnum=<%=c.getCategoryNo() %>">삭제</a></td>
+						<td><a href="<%=request.getContextPath() %>/updateCategory?cnum=<%=c.getCategoryNo() %>">수정</a></td>
+						<td><a href="<%=request.getContextPath() %>/deleteCategory?cnum=<%=c.getCategoryNo() %>">삭제</a></td>
 					</tr>
 			<%
 				}
@@ -109,8 +93,8 @@
 		<%
 			if(currentPage>1){
 		%>	
-				<a class="page-link d-inline-block" href="/cashbook2/category/categoryList.jsp?currentPage=1">[<<]</a>
-				<a class="page-link d-inline-block" href="/cashbook2/category/categoryList.jsp?currentPage=<%=currentPage-1%>">[<]</a>
+				<a class="page-link d-inline-block" href="<%=request.getContextPath() %>/categoryList?currentPage=1">[<<]</a>
+				<a class="page-link d-inline-block" href="<%=request.getContextPath() %>/categoryList?currentPage=<%=currentPage-1%>">[<]</a>
 		<% 
 			}
 		%>
@@ -118,8 +102,8 @@
 		<%
 			if(currentPage<lastPage){
 		%>	
-				<a class="page-link d-inline-block" href="/cashbook2/category/categoryList.jsp?currentPage=<%=currentPage+1%>">[>]</a>
-				<a class="page-link d-inline-block" href="/cashbook2/category/categoryList.jsp?currentPage=<%=lastPage%>">[>>]</a>
+				<a class="page-link d-inline-block" href="<%=request.getContextPath() %>/categoryList?currentPage=<%=currentPage+1%>">[>]</a>
+				<a class="page-link d-inline-block" href="<%=request.getContextPath() %>/categoryList?currentPage=<%=lastPage%>">[>>]</a>
 		<% 
 			}
 		%>
