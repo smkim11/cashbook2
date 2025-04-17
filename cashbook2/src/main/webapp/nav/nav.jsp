@@ -29,11 +29,11 @@
 </style>
 <div class="navbar-custom d-flex align-items-center justify-content-between">
 	<div>
-		<a href="/cashbook2/index.jsp">홈</a>
-		<a href="/cashbook2/monthList.jsp">달력</a>
-		<a href="/cashbook2/category/categoryList.jsp">수입 지출</a>
+		<a href="<%=request.getContextPath() %>/index">홈</a>
+		<a href="<%=request.getContextPath() %>/monthList">달력</a>
+		<a href="<%=request.getContextPath() %>/categoryList">수입 지출</a>
 	</div>
 	<div>
-		<a href="/cashbook2/login/logout.jsp">로그아웃</a>
+		<a href="<%=request.getContextPath() %>/logout">로그아웃</a>
 	</div>
 </div>
