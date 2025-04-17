@@ -1,11 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	String ID = (String)(session.getAttribute("ID"));
-	if(ID != null){ // 로그인 상태 일때
-		response.sendRedirect("/cashbook2/index.jsp");
-		return;
-	}
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +47,7 @@
 </head>
 <body>
 	<h1>로그인</h1>
-	<form action="/cashbook2/login/loginAction.jsp" method="post">
+	<form action="<%=request.getContextPath() %>/login" method="post">
 	<table class="w-25 table table-bordered text-center align-middle">
 		<input type="hidden" name="id" value="admin">
 		<tr>
@@ -62,7 +55,7 @@
 			<td><input class="form-control" type="password" name="pw" class="form-control"></td>
 		</tr>
 	</table>
-	<a href="/cashbook2/login/updateAdminPwForm.jsp">비밀번호 변경</a><br>
+	<a href="<%=request.getContextPath() %>/updatePw">비밀번호 변경</a><br>
 	<div class="form-button">
 		<button type="submit" class="btn btn-primary">로그인</button>	
 	</div>

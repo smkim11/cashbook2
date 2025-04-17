@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	String ID = (String)(session.getAttribute("ID"));
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,15 +37,18 @@
 </head>
 <body>
 <%
+	String ID = (String)(request.getAttribute("ID"));
+%>
+<%
 	if(ID == null){
 %>
-		<a href="/cashbook2/login/loginForm.jsp">로그인</a>
+		<a href="<%=request.getContextPath()%>/login">로그인</a>
 <% 
 	}else{
 %>
 		<%=ID %>님 환영합니다.
 		&nbsp;
-		<a href="/cashbook2/login/logout.jsp">로그아웃</a>
+		<a href="<%=request.getContextPath()%>/logout">로그아웃</a>
 <% 
 	}
 %><hr>
