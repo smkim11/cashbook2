@@ -41,7 +41,7 @@
 </head>
 <body>
 	<h1>비밀번호 변경</h1>
-	<form action="/cashbook2/login/updateAdminPwAction.jsp" method="post">
+	<form action="<%=request.getContextPath() %>/updatePw" method="post">
 	<table class="w-25 table table-bordered text-center align-middle">
 		<input type="hidden" name="id" value="admin">
 		<tr>

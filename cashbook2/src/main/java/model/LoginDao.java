@@ -29,7 +29,7 @@ public class LoginDao {
 	}
 	
 	// 비밀번호 변경 
-	public int updatePassword(String id, String pw, String newpw) throws ClassNotFoundException, SQLException {
+	public int updatePassword(String id, String pw, String newpw) throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/cashbook", "root", "java1234");
 		String sql = "update admin set admin_pw=? where admin_id=? and admin_pw=?";
