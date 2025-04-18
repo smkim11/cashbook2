@@ -81,13 +81,13 @@
 		for(HashMap<String,Object> map : list){
 	%>
 	<div class="atag">
-		<a href="/cashbook2/cash/updateCashForm.jsp?cashNo=<%=cashNo%>">수정</a> |
-		<a href="/cashbook2/cash/deleteCashForm.jsp?cashNo=<%=cashNo %>&kind=<%=kind%>">삭제</a> |
-		<a href="/cashbook2/cash/insertReceitForm.jsp?cashNo=<%=cashNo %>&kind=<%=kind%>">영수증 등록</a> 
+		<a href="<%=request.getContextPath() %>/updateCash?cashNo=<%=cashNo%>">수정</a> |
+		<a href="<%=request.getContextPath() %>/deleteCash?cashNo=<%=cashNo %>&kind=<%=kind%>">삭제</a> |
+		<a href="<%=request.getContextPath() %>/insertReceit?cashNo=<%=cashNo %>&kind=<%=kind%>">영수증 등록</a> 
 		<%
 			if(r.getFileName()!=null){
 		%>
-			    | <a href="/cashbook2/cash/deleteReceitForm.jsp?cashNo=<%=cashNo %>&kind=<%=kind%>">영수증 삭제</a>
+			    | <a href="<%=request.getContextPath() %>/deleteReceit?cashNo=<%=cashNo %>&kind=<%=kind%>">영수증 삭제</a>
 		<% 
 			}
 		%>
