@@ -3,29 +3,9 @@
 <%@ page import="model.*"%>
 <%@ page import="dto.*"%>
 <%
-	String ID = (String)(session.getAttribute("ID"));
-	if(ID == null){ // 로그아웃 상태 일때
-		response.sendRedirect("/cashbook2/index.jsp");
-		return;
-	}
-	
-	// dateList.jsp -> 수입 지출 입력 버튼(0000-00-00) ->
-	String cashDate = request.getParameter("cashDate");
-	
-	// insertCashForm-> kind 선택(String kind)
-	String kind = request.getParameter("kind");
-	if(kind == null){
-		kind="";
-	}
-	
-	ArrayList<Category> list = new ArrayList<>();
-	if(kind!=null){// insertCashForm에서 kind 선택 후 재요청
-		// DB에서 선택된 kind에 해당하는 title목록
-		CategoryDao cd = new CategoryDao();
-		list = cd.selectCategoryListByKind(kind);
-	}
-	
-	
+	String cashDate = (String)(request.getAttribute("cashDate"));
+	String kind = (String)(request.getAttribute("kind"));
+	ArrayList<Category> list = (ArrayList<Category>)(request.getAttribute("list"));
 %>
 <!DOCTYPE html>
 <html>
@@ -73,7 +53,7 @@
 <jsp:include page="/nav/nav.jsp"></jsp:include>
 <div class="page-content">
 	<h2>종류 선택</h2>
-	<form method="post" action="/cashbook2/cash/insertCashForm.jsp">
+	<form method="get" action="<%=request.getContextPath() %>/insertCash">
 		<table class="w-25 table table-bordered text-center align-middle">
 		<input type="hidden" name="cashDate" value="<%=cashDate%>">
 			<tr>
@@ -126,7 +106,7 @@
 	<% 
 		}
 	%>
-	<form method="post" action="/cashbook2/cash/insertCashAction.jsp">
+	<form method="post" action="<%=request.getContextPath() %>/insertCash">
 		<table class="w-25 table table-bordered text-center align-middle">
 		<tr>
 			<th>날짜</th>
