@@ -3,16 +3,9 @@
 <%@ page import="model.*"%>
 <%@ page import="dto.*"%>
 <%
-	String ID = (String)(session.getAttribute("ID"));
-	if(ID == null){ // 로그아웃 상태 일때
-		response.sendRedirect("/cashbook2/index.jsp");
-		return;
-	}
-	
-	int cashNo = Integer.valueOf(request.getParameter("cashNo"));
-	
-	CashDao cd = new CashDao();
-	ArrayList<HashMap<String,Object>> list = cd.selectCashByNo(cashNo);
+	int cashNo = (Integer)(request.getAttribute("cashNo"));
+
+	ArrayList<HashMap<String,Object>> list = (ArrayList<HashMap<String,Object>>)(request.getAttribute("list"));
 %>
 <!DOCTYPE html>
 <html>
@@ -73,7 +66,7 @@
 		<% 
 			}
 		%>
-		<form method="post" action="/cashbook2/cash/updateCashAction.jsp">
+		<form method="post" action="<%=request.getContextPath() %>/updateCash">
 		<table class="w-25 table table-bordered text-center align-middle">
 		<input type="hidden" name=cashNo value="<%=cashNo %>" >
 		<input type="hidden" name=kind value="<%=m.get("kind") %>" >
