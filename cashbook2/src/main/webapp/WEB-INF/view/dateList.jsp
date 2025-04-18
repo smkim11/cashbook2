@@ -74,7 +74,7 @@
 <div class="page-content">
 	<h1><%=cashDate %> 수입 지출</h1>
 	<div class="table-wrapper">
-		<form method="post" action="<%=request.getContextPath() %>/insertCash" >
+		<form method="get" action="<%=request.getContextPath() %>/insertCash" >
 			<input type="hidden" name="cashDate" value="<%=cashDate%>">
 			<button type="submit" class="btn btn-primary">추가</button>
 		</form>
